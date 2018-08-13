@@ -1,0 +1,95 @@
+<?xml version="1.0" ?>
+<project name="zion" default="war">
+
+	<!--
+	<taskdef resource="net/sf/antcontrib/antlib.xml">
+		<classpath>
+			<pathelement location="WebContent/WEB-INF/lib/antcontrib.jar"/>
+		</classpath>
+	</taskdef>
+	-->
+	
+	<property environment="env"/>
+	<property file = "build.properties"/>
+
+	<path id="compile.classpath">
+		<fileset dir="C:\JAMAL_ASHRAF\test-zion\zion1.0\WebContent\WEB-INF\lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="war" depends="compile">
+
+		<echo message="*******************************"/>
+		<echo message="****** CREATING WAR FILE ******"/>
+		<echo message="*******************************"/>
+
+		<copy todir="C:\JAMAL_ASHRAF\test-zion\build\classes">
+			
+			<fileset dir="C:\JAMAL_ASHRAF\test-zion\zion1.0\src">
+				<include name="properties/*.*" />
+				<include name="**/*.*" />
+				<exclude name="**/*.java" />
+			</fileset>
+			
+			<!--
+				<fileset dir="${app.source.build.dir}/classes">
+					<include name="**/*.*" />
+				</fileset>
+			 -->
+		</copy> 
+
+
+		<war destfile="C:\JAMAL_ASHRAF\test-zion\build\war\zion.war" webxml="C:\JAMAL_ASHRAF\test-zion\zion1.0\WebContent\WEB-INF\web.xml">
+			<fileset dir="C:\JAMAL_ASHRAF\test-zion\zion1.0\WebContent"/>
+			<classes dir="C:\JAMAL_ASHRAF\test-zion\build\classes"/>
+		</war>
+
+		<echo message="******************************"/>
+		<echo message="****** WAR FILE CREATED ******"/>
+		<echo message="******************************"/>
+
+	</target>
+
+	<target name="compile" depends = "init">
+		
+		<echo message="********************************"/>
+		<echo message="******* COMPILING SOURCE *******"/>
+		<echo message="********************************"/>
+
+	<!--
+		<copy todir="${FWMP_ROOT}/projects/ACT/FieldForce/Server/FWMP/src">
+			<fileset dir="${FWMP_ROOT}/projects/ACT/FieldForce/Server/FWMP/integration">
+				<include name="**/*"/>
+			</fileset>
+		</copy>
+	-->
+
+		<javac destdir="C:\JAMAL_ASHRAF\test-zion\build\classes" debug="true" srcdir="C:\JAMAL_ASHRAF\test-zion\zion1.0\src\" includeantruntime="false">
+			<classpath refid="compile.classpath"/>
+		</javac>
+
+		<echo message="*********************************"/>
+		<echo message="******* COMPILATION DONE ********"/>
+		<echo message="*********************************"/>
+		
+	</target>
+
+	<target name="init" depends = "clean">
+		<echo message = "initiazing....."/>
+		<mkdir dir="C:\JAMAL_ASHRAF\test-zion\build"/>
+		<mkdir dir="C:\JAMAL_ASHRAF\test-zion\build\war"/>
+		<mkdir dir="C:\JAMAL_ASHRAF\test-zion\build\classes" />
+		<echo message = "initiazing....."/>
+	</target>
+
+	<target name="clean">
+		<echo message = "cleaning....."/>
+		
+		<delete dir="C:\JAMAL_ASHRAF\test-zion\build"/>
+		<delete dir="C:\JAMAL_ASHRAF\test-zion\build\war"/>
+		<delete dir="C:\JAMAL_ASHRAF\test-zion\build\classes" />
+		<echo message = "cleaning.....done"/>
+	</target>
+
+</project>
